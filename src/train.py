@@ -55,7 +55,7 @@ for i, params in enumerate(params_list):
         
         # Hitung Metrik
         acc = accuracy_score(y_test, y_pred)
-        # Pakai average="weighted" karena targetnya ada 3 kelas (0, 1, 2)
+        # Pakai average="weighted" karena targetnya ada 3 kelas (0 = Barolo, 1 = Grignolino, 2 = Barbera)
         f1 = f1_score(y_test, y_pred, average="weighted")
         
         print(f"Run {i+1} | Params: {params} | Acc: {acc:.4f} | F1: {f1:.4f}")
