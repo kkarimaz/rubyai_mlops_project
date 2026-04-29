@@ -1,3 +1,12 @@
+---
+title: Wine MLOps API
+emoji: 🍷
+colorFrom: red
+colorTo: pink
+sdk: docker
+pinned: false
+---
+
 # Wine Recognition MLOps Project
 
 Proyek ini adalah implementasi **end-to-end MLOps** untuk klasifikasi jenis anggur menggunakan dataset UCI Wine. Proyek ini mendemonstrasikan siklus hidup Machine Learning yang lengkap — mulai dari versioning data, experiment tracking, hingga deployment menggunakan Docker dan Hugging Face Spaces.
