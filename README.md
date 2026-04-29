@@ -9,23 +9,23 @@ pinned: false
 
 # Wine Recognition MLOps Project
 
-Proyek ini adalah implementasi **end-to-end MLOps** untuk klasifikasi jenis anggur menggunakan dataset UCI Wine. Proyek ini mendemonstrasikan siklus hidup Machine Learning yang lengkap — mulai dari versioning data, experiment tracking, hingga deployment menggunakan Docker dan Hugging Face Spaces.
+This project is an **end-to-end MLOps** implementation for wine variety classification using the UCI Wine dataset. It demonstrates a complete Machine Learning lifecycle — from data versioning, experiment tracking, to deployment using Docker and Hugging Face Spaces.
 
 ---
 
-## Daftar Isi
+## Table of Contents
 
-- [Gambaran Umum](#gambaran-umum)
-- [Arsitektur Sistem](#arsitektur-sistem)
+- [Overview](#overview)
+- [System Architecture](#system-architecture)
 - [Tech Stack](#tech-stack)
-- [Struktur Folder](#struktur-folder)
-- [Cara Menjalankan](#cara-menjalankan)
+- [Folder Structure](#folder-structure)
+- [How to Run](#how-to-run)
   - [1. Setup Environment](#1-setup-environment)
-  - [2. Siapkan Data dengan DVC](#2-siapkan-data-dengan-dvc)
+  - [2. Set Up Data with DVC](#2-set-up-data-with-dvc)
   - [3. Training & Experiment Tracking](#3-training--experiment-tracking)
-  - [4. Jalankan API Lokal](#4-jalankan-api-lokal)
-  - [5. Jalankan dengan Docker](#5-jalankan-dengan-docker)
-- [Dokumentasi API](#dokumentasi-api)
+  - [4. Run API Locally](#4-run-api-locally)
+  - [5. Run with Docker](#5-run-with-docker)
+- [API Documentation](#api-documentation)
   - [GET /](#get-)
   - [GET /health](#get-health)
   - [POST /predict](#post-predict)
@@ -35,27 +35,27 @@ Proyek ini adalah implementasi **end-to-end MLOps** untuk klasifikasi jenis angg
 
 ---
 
-## Gambaran Umum
+## Overview
 
-Proyek ini mengklasifikasikan sampel anggur ke dalam 3 jenis kultivar Italia berdasarkan 13 fitur kimiawi:
+This project classifies wine samples into 3 Italian cultivar types based on 13 chemical features:
 
-| Label ID | Nama Kultivar |
+| Label ID | Cultivar Name |
 |----------|---------------|
 | 0        | Barolo        |
 | 1        | Grignolino    |
 | 2        | Barbera       |
 
-**MLOps Capabilities yang diimplementasikan:**
+**Implemented MLOps Capabilities:**
 
-- **Data Versioning** — DVC + DagsHub Storage memastikan dataset dapat direproduksi di environment mana pun.
-- **Experiment Tracking** — MLflow secara otomatis mencatat hyperparameter, metrik (Accuracy & F1-Score), dan artifact model untuk setiap run.
-- **Model Registry** — Model terbaik disimpan sebagai file `.pkl` secara lokal dan di-log ke MLflow Artifacts.
-- **Production API** — FastAPI dengan validasi input menggunakan Pydantic V2 untuk melayani prediksi.
-- **Containerization** — Docker image siap-deploy ke server atau platform cloud seperti Hugging Face Spaces.
+- **Data Versioning** — DVC + DagsHub Storage ensures the dataset is reproducible in any environment.
+- **Experiment Tracking** — MLflow automatically logs hyperparameters, metrics (Accuracy & F1-Score), and model artifacts for every run.
+- **Model Registry** — The best model is saved as a `.pkl` file locally and logged to MLflow Artifacts.
+- **Production API** — FastAPI with input validation using Pydantic V2 to serve predictions.
+- **Containerization** — Docker image ready to deploy to any server or cloud platform such as Hugging Face Spaces.
 
 ---
 
-## Arsitektur Sistem
+## System Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -88,7 +88,7 @@ Proyek ini mengklasifikasikan sampel anggur ke dalam 3 jenis kultivar Italia ber
 
 ## Tech Stack
 
-| Komponen            | Teknologi              | Versi      |
+| Component           | Technology             | Version    |
 |---------------------|------------------------|------------|
 | ML Framework        | Scikit-Learn           | 1.8.0      |
 | API Framework       | FastAPI + Uvicorn      | 0.136.1    |
@@ -102,7 +102,7 @@ Proyek ini mengklasifikasikan sampel anggur ke dalam 3 jenis kultivar Italia ber
 
 ---
 
-## Struktur Folder
+## Folder Structure
 
 ```
 rubyai_mlops_project/
@@ -111,32 +111,32 @@ rubyai_mlops_project/
 │   └── main.py             # FastAPI app: endpoint /, /health, /predict
 │
 ├── data/
-│   ├── wine.csv            # Dataset lokal (di-ignore oleh Git, ditrack DVC)
-│   └── wine.csv.dvc        # DVC pointer file (di-track Git)
+│   ├── wine.csv            # Local dataset (ignored by Git, tracked by DVC)
+│   └── wine.csv.dvc        # DVC pointer file (tracked by Git)
 │
 ├── models/
-│   └── model.pkl           # Model terbaik hasil training (di-ignore Git)
+│   └── model.pkl           # Best model from training (ignored by Git)
 │
 ├── src/
-│   ├── prepare_data.py     # Mengambil dataset dari scikit-learn, simpan ke CSV
+│   ├── prepare_data.py     # Fetches dataset from scikit-learn, saves to CSV
 │   └── train.py            # Training pipeline + MLflow logging
 │
 ├── .dvc/
-│   └── config              # Konfigurasi DVC remote (DagsHub)
+│   └── config              # DVC remote configuration (DagsHub)
 │
-├── Dockerfile              # Build image untuk deployment (port 7860)
-├── requirements.txt        # Dependencies development (termasuk DVC, MLflow)
-├── requirements-prod.txt   # Dependencies production (tanpa DVC, MLflow)
+├── Dockerfile              # Build image for deployment (port 7860)
+├── requirements.txt        # Development dependencies (includes DVC, MLflow)
+├── requirements-prod.txt   # Production dependencies (without DVC, MLflow)
 └── README.md
 ```
 
 ---
 
-## Cara Menjalankan
+## How to Run
 
 ### 1. Setup Environment
 
-**Clone repository dan install dependencies:**
+**Clone the repository and install dependencies:**
 
 ```bash
 git clone https://dagshub.com/kkarimaz/rubyai_mlops_project.git
@@ -144,32 +144,32 @@ cd rubyai_mlops_project
 
 python -m venv venv
 source venv/bin/activate        # Linux/Mac
-# atau: venv\Scripts\activate   # Windows
+# or: venv\Scripts\activate     # Windows
 
 pip install -r requirements.txt
 ```
 
 ---
 
-### 2. Siapkan Data dengan DVC
+### 2. Set Up Data with DVC
 
-> **Opsi A — Pull dari DagsHub (direkomendasikan):**
+> **Option A — Pull from DagsHub (recommended):**
 >
-> Pastikan kamu sudah punya akses ke DagsHub remote. Jalankan:
+> Make sure you have access to the DagsHub remote. Run:
 >
 > ```bash
 > dvc pull
 > ```
 >
-> Ini akan mengunduh `data/wine.csv` dari DagsHub Storage.
+> This will download `data/wine.csv` from DagsHub Storage.
 
-> **Opsi B — Generate ulang dari source:**
+> **Option B — Regenerate from source:**
 >
 > ```bash
 > python src/prepare_data.py
 > ```
 >
-> Script ini mengambil dataset langsung dari `sklearn.datasets.load_wine` dan menyimpannya ke `data/wine.csv`.
+> This script fetches the dataset directly from `sklearn.datasets.load_wine` and saves it to `data/wine.csv`.
 
 ---
 
@@ -179,64 +179,64 @@ pip install -r requirements.txt
 python src/train.py
 ```
 
-Script ini akan:
-1. Membaca `data/wine.csv`
-2. Melatih **3 variasi** `RandomForestClassifier` dengan kombinasi hyperparameter berbeda:
+This script will:
+1. Read `data/wine.csv`
+2. Train **3 variations** of `RandomForestClassifier` with different hyperparameter combinations:
 
-   | Variasi | `n_estimators` | `max_depth` | Deskripsi     |
-   |---------|----------------|-------------|---------------|
-   | 1       | 10             | 3           | Model ringan  |
-   | 2       | 50             | 5           | Model medium  |
-   | 3       | 100            | 10          | Model kompleks|
+   | Variation | `n_estimators` | `max_depth` | Description       |
+   |-----------|----------------|-------------|-------------------|
+   | 1         | 10             | 3           | Lightweight model |
+   | 2         | 50             | 5           | Medium model      |
+   | 3         | 100            | 10          | Complex model     |
 
-3. Mencatat hyperparameter, Accuracy, dan F1-Score ke **MLflow** (hosted di DagsHub).
-4. Menyimpan model terbaik (berdasarkan F1-Score) ke `models/model.pkl`.
+3. Log hyperparameters, Accuracy, and F1-Score to **MLflow** (hosted on DagsHub).
+4. Save the best model (based on F1-Score) to `models/model.pkl`.
 
-**Lihat hasil eksperimen di:**
+**View experiment results at:**
 `https://dagshub.com/kkarimaz/rubyai_mlops_project`
 
 ---
 
-### 4. Jalankan API Lokal
+### 4. Run API Locally
 
-> Pastikan `models/model.pkl` sudah ada (jalankan training terlebih dahulu).
+> Make sure `models/model.pkl` exists (run training first).
 
 ```bash
 uvicorn api.main:app --reload --port 8000
 ```
 
-API akan berjalan di `http://localhost:8000`.
+The API will run at `http://localhost:8000`.
 
-Buka dokumentasi interaktif (Swagger UI) di:
+Open the interactive documentation (Swagger UI) at:
 `http://localhost:8000/docs`
 
 ---
 
-### 5. Jalankan dengan Docker
+### 5. Run with Docker
 
-**Build image:**
+**Build the image:**
 
 ```bash
 docker build -t wine-mlops .
 ```
 
-**Jalankan container:**
+**Run the container:**
 
 ```bash
 docker run -p 7860:7860 wine-mlops
 ```
 
-API akan berjalan di `http://localhost:7860`.
+The API will run at `http://localhost:7860`.
 
-> Image ini menggunakan `requirements-prod.txt` yang hanya berisi library yang dibutuhkan untuk serving (FastAPI, Scikit-Learn, Joblib, dll) — tanpa MLflow dan DVC — agar ukuran image lebih kecil.
+> This image uses `requirements-prod.txt` which only contains libraries needed for serving (FastAPI, Scikit-Learn, Joblib, etc.) — without MLflow and DVC — to keep the image size smaller.
 
 ---
 
-## Dokumentasi API
+## API Documentation
 
 ### GET /
 
-Health check sederhana.
+Simple health check.
 
 **Response:**
 ```json
@@ -249,7 +249,7 @@ Health check sederhana.
 
 ### GET /health
 
-Cek status layanan.
+Check service status.
 
 **Response:**
 ```json
@@ -262,27 +262,27 @@ Cek status layanan.
 
 ### POST /predict
 
-Menerima 13 fitur kimiawi anggur dan mengembalikan prediksi kelas kultivar.
+Accepts 13 wine chemical features and returns a predicted cultivar class.
 
 **Request Body (JSON):**
 
-| Field                          | Tipe    | Deskripsi                                  |
-|--------------------------------|---------|--------------------------------------------|
-| `alcohol`                      | float   | Kadar alkohol                              |
-| `malic_acid`                   | float   | Kadar asam malat                           |
-| `ash`                          | float   | Kadar abu                                  |
-| `alcalinity_of_ash`            | float   | Alkalinitas abu                            |
-| `magnesium`                    | float   | Kadar magnesium                            |
-| `total_phenols`                | float   | Total fenol                                |
-| `flavanoids`                   | float   | Kadar flavanoid                            |
-| `nonflavanoid_phenols`         | float   | Kadar fenol non-flavanoid                  |
-| `proanthocyanins`              | float   | Kadar proantosianin                        |
-| `color_intensity`              | float   | Intensitas warna                           |
-| `hue`                          | float   | Hue (corak warna)                          |
-| `od280_od315_of_diluted_wines` | float   | Rasio OD280/OD315 pada anggur yang diencerkan |
-| `proline`                      | float   | Kadar prolin                               |
+| Field                          | Type    | Description                                      |
+|--------------------------------|---------|--------------------------------------------------|
+| `alcohol`                      | float   | Alcohol content                                  |
+| `malic_acid`                   | float   | Malic acid content                               |
+| `ash`                          | float   | Ash content                                      |
+| `alcalinity_of_ash`            | float   | Alkalinity of ash                                |
+| `magnesium`                    | float   | Magnesium content                                |
+| `total_phenols`                | float   | Total phenols                                    |
+| `flavanoids`                   | float   | Flavanoid content                                |
+| `nonflavanoid_phenols`         | float   | Non-flavanoid phenol content                     |
+| `proanthocyanins`              | float   | Proanthocyanin content                           |
+| `color_intensity`              | float   | Color intensity                                  |
+| `hue`                          | float   | Hue                                              |
+| `od280_od315_of_diluted_wines` | float   | OD280/OD315 ratio of diluted wines               |
+| `proline`                      | float   | Proline content                                  |
 
-**Contoh Request:**
+**Example Request:**
 ```json
 {
   "alcohol": 13.2,
@@ -301,7 +301,7 @@ Menerima 13 fitur kimiawi anggur dan mengembalikan prediksi kelas kultivar.
 }
 ```
 
-**Contoh Response:**
+**Example Response:**
 ```json
 {
   "message": "Prediction created!",
@@ -310,7 +310,7 @@ Menerima 13 fitur kimiawi anggur dan mengembalikan prediksi kelas kultivar.
 }
 ```
 
-**Contoh dengan `curl`:**
+**Example with `curl`:**
 ```bash
 curl -X POST "http://localhost:8000/predict" \
      -H "Content-Type: application/json" \
@@ -329,45 +329,45 @@ curl -X POST "http://localhost:8000/predict" \
 ## Dataset & Model
 
 - **Dataset:** [UCI Wine Dataset](https://archive.ics.uci.edu/dataset/109/wine) via `sklearn.datasets.load_wine`
-- **Jumlah sampel:** 178 (split 80/20 untuk train/test)
-- **Jumlah fitur:** 13 fitur kimiawi
-- **Jumlah kelas:** 3 kultivar anggur
-- **Algoritma:** `RandomForestClassifier` (Scikit-Learn)
-- **Metrik evaluasi:** Accuracy & F1-Score (weighted)
+- **Number of samples:** 178 (80/20 train/test split)
+- **Number of features:** 13 chemical features
+- **Number of classes:** 3 wine cultivars
+- **Algorithm:** `RandomForestClassifier` (Scikit-Learn)
+- **Evaluation metrics:** Accuracy & F1-Score (weighted)
 
 ---
 
 ## MLflow Experiment Tracking
 
-Semua run tercatat di MLflow Tracking Server yang dihosting di DagsHub:
+All runs are recorded in the MLflow Tracking Server hosted on DagsHub:
 
 ```
 https://dagshub.com/kkarimaz/rubyai_mlops_project.mlflow
 ```
 
-Nama experiment: `Wine_Classification_RF`
+Experiment name: `Wine_Classification_RF`
 
-Setiap run mencatat:
+Each run logs:
 - **Parameters:** `n_estimators`, `max_depth`
 - **Metrics:** `accuracy`, `f1_score`
-- **Artifacts:** file model `.pkl`
+- **Artifacts:** model file `.pkl`
 
 ---
 
 ## DVC Data Versioning
 
-Dataset dikelola menggunakan DVC dengan remote storage di DagsHub:
+The dataset is managed using DVC with remote storage on DagsHub:
 
 ```
 https://dagshub.com/kkarimaz/rubyai_mlops_project.dvc
 ```
 
-File `data/wine.csv.dvc` di-commit ke Git sebagai pointer ke versi data yang tepat. File data aktual (`wine.csv`) tidak di-push ke Git, melainkan ke DagsHub Storage.
+The `data/wine.csv.dvc` file is committed to Git as a pointer to the exact data version. The actual data file (`wine.csv`) is not pushed to Git, but to DagsHub Storage.
 
-**Perintah DVC yang umum digunakan:**
+**Commonly used DVC commands:**
 
 ```bash
-dvc pull          # Unduh data dari remote
-dvc push          # Upload data ke remote
-dvc status        # Cek apakah data lokal sinkron dengan remote
+dvc pull          # Download data from remote
+dvc push          # Upload data to remote
+dvc status        # Check if local data is in sync with remote
 ```
