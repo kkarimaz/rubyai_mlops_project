@@ -3,20 +3,27 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, f1_score
+from dotenv import load_dotenv
 import mlflow
 import mlflow.sklearn
 import joblib
+import dagshub
 
+load_dotenv()
+dagshub_token = os.getenv("DAGSHUB_TOKEN")
 
 # Setup MLflow Tracking
 os.environ["MLFLOW_TRACKING_USERNAME"] = "kkarimaz"
-os.environ["MLFLOW_TRACKING_PASSWORD"] = "7701378627fc89d8971cb3c66dd0ccdf6775f2ff"
+os.environ["MLFLOW_TRACKING_PASSWORD"] = dagshub_token
 
 # Set URL Tracking DagsHub 
 mlflow.set_tracking_uri("https://dagshub.com/kkarimaz/rubyai_mlops_project.mlflow")
 
+dagshub_token = os.getenv("DAGSHUB_TOKEN")
+# dagshub.init(repo_owner='kkarimaz', repo_name='rubyai_mlops_project', mlflow=True)
+
 # Beri nama eksperimen
-mlflow.set_experiment("Wine_Classification_RF")
+mlflow.set_experiment("Wine_Classification_Cloud_V2")
 
 # Load data
 print("Memuat data...")
