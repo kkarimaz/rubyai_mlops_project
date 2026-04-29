@@ -208,13 +208,13 @@ Buka dokumentasi interaktif (Swagger UI) di:
 **Build image:**
 
 ```bash
-docker build -t wine-mlops-api .
+docker build -t wine-mlops .
 ```
 
 **Jalankan container:**
 
 ```bash
-docker run -p 7860:7860 wine-mlops-api
+docker run -p 7860:7860 wine-mlops
 ```
 
 API akan berjalan di `http://localhost:7860`.
